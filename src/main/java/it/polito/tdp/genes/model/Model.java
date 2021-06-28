@@ -65,7 +65,11 @@ public class Model {
 		
 		List<Vicino> result = new ArrayList<>();
 		for(DefaultWeightedEdge e: this.grafo.edgesOf(g)) {
-			Genes vicino = this.grafo.getEdgeTarget(e);
+			Genes vicino;
+			if(this.grafo.getEdgeTarget(e).equals(g))
+				vicino = this.grafo.getEdgeSource(e);
+			else
+				vicino = this.grafo.getEdgeTarget(e);
 			Vicino v = new Vicino(vicino, this.grafo.getEdgeWeight(e));
 			result.add(v);
 		}
