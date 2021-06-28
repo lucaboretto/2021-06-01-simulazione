@@ -9,6 +9,7 @@ import java.util.ResourceBundle;
 
 import it.polito.tdp.genes.model.Genes;
 import it.polito.tdp.genes.model.Model;
+import it.polito.tdp.genes.model.Vicino;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -30,7 +31,7 @@ public class FXMLController {
     private Button btnCreaGrafo; // Value injected by FXMLLoader
 
     @FXML // fx:id="cmbGeni"
-    private ComboBox<?> cmbGeni; // Value injected by FXMLLoader
+    private ComboBox<Genes> cmbGeni; // Value injected by FXMLLoader
 
     @FXML // fx:id="btnGeniAdiacenti"
     private Button btnGeniAdiacenti; // Value injected by FXMLLoader
@@ -46,13 +47,20 @@ public class FXMLController {
 
     @FXML
     void doCreaGrafo(ActionEvent event) {
-    	
+    	model.creaGrafo();
+    	this.cmbGeni.getItems().addAll(model.getVertici());
+    	this.txtResult.appendText("GRAFO CREATO\n");
+    	this.txtResult.appendText("#VERTICI: " + model.getVertici().size() + "\n"); 
+    	this.txtResult.appendText("#ARCHI " + model.getArchi().size() + "\n"); 
 
     }
 
     @FXML
     void doGeniAdiacenti(ActionEvent event) {
-
+    	Genes g = this.cmbGeni.getValue();
+    	this.txtResult.appendText("\nLISTA VICINI GENE " + g.getGeneId()+"\n"); 
+    	for(Vicino v: model.getAdiacenti(g))
+    			this.txtResult.appendText(v.getG() + " " + v.getPeso()+"\n");
     	
     }
 
